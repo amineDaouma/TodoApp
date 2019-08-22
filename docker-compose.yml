@@ -1,0 +1,72 @@
+version: "3"
+services:
+  ##############################
+  # Setup node container
+  ##############################
+
+  server:
+    build: ./backend
+    expose:
+      - ${APP_SERVER_PORT}
+    environment:
+      API_HOST: ${API_HOST}
+      API_SERVER_PORT: ${APP_SERVER_PORT}
+    ports:
+      - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
+    volumes:
+      - ./backend/src:/server/src
+    # links:
+    #   - mongo
+    command: npm start
+
+  #################################
+  # Setup mongo container
+  #################################
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
+
+  #################################
+  # Setup client container
+  #################################
+
+  client:
+    build: ./frontend/front-todo-app
+    environment:
+      - REACT_APP_PORT=${REACT_APP_PORT}
+    expose:
+      - ${REACT_APP_PORT}
+    ports:
+      - ${REACT_APP_PORT}:${REACT_APP_PORT}
+    volumes:
+      - ./frontend/front-todo-app/src:/client/src
+      - ./frontend/front-todo-app/public:/client/public
+    # links:
+    #   - server
+    command: npm start
+# version: "2"
+# services:
+#   server:
+#     container_name: server
+#     restart: always
+#     build: ./backend/
+#     ports:
+#       - "4000:4000"
+#     links:
+#       - mongo
+#   client:
+#     container_name: client
+#     restart: always
+#     build: ./frontend/front-todo-app/
+#     ports:
+#       - "3000:3000"
+#     links:
+#       - server
+#   mongo:
+#     container_name: mongo
+#     image: mongo
+#     ports:
+#       - "27017:27017"
