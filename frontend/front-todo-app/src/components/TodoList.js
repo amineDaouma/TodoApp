@@ -35,6 +35,11 @@ const ADD_TODO = gql`
   }
 `;
 
+const DELETE_TODO = gql`
+  mutation DeleteTodo($id: ID!) {
+    deleteTodo(id: $id)
+  }
+`;
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
@@ -59,7 +64,21 @@ const TodoList = () => {
   /**
    * Complete mutation hook
    */
-  const [updateTodo] = useMutation(UPDATE_TODO);
+  const [updateTodo] = useMutation(UPDATE_TODO, {
+    refetchQueries: [
+      { query: GET_TODOS, variables: { awaitRefetchQueries: true } }
+    ]
+  });
+
+  /**
+   * Delete mutation hook
+   *
+   */
+  const [deleteTodo] = useMutation(DELETE_TODO, {
+    refetchQueries: [
+      { query: GET_TODOS, variables: { awaitRefetchQueries: true } }
+    ]
+  });
 
   /**
    * Method to handle the adding of a todo to the todolist
@@ -84,9 +103,9 @@ const TodoList = () => {
    * @param  index
    */
   const handleRemoveTodo = index => {
-    // const clonedTodos = [...todos];
-    // clonedTodos.splice(index, 1);
-    // setTodos(clonedTodos);
+    deleteTodo({
+      variables: { id: index }
+    });
   };
 
   return (

@@ -17,7 +17,12 @@ const resolvers = {
       return foundTodo;
     },
     deleteTodo: async (_, { id }) => {
-      const todoToDelete = await Todo.findByIdAndRemove(id);
+      await Todo.findByIdAndRemove(id, err => {
+        if (err) {
+          return false;
+        }
+      });
+      return true;
     }
   }
 };
