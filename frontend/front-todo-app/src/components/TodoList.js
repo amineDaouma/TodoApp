@@ -48,7 +48,7 @@ const TodoList = () => {
   });
 
   /**
-   * Mutation HOOKS
+   * Add mutation HOOK
    */
   const [addTodo] = useMutation(ADD_TODO, {
     refetchQueries: [
@@ -56,17 +56,17 @@ const TodoList = () => {
     ]
   });
 
+  /**
+   * Complete mutation hook
+   */
   const [updateTodo] = useMutation(UPDATE_TODO);
+
   /**
    * Method to handle the adding of a todo to the todolist
    * @param  todoText
    */
-
   const handleAddTodo = async todoText => {
-    const { data } = await addTodo({ variables: { text: todoText } });
-    setTodos([...todos, data.updateTodo]);
-    // const copy = [...todos, data.addTodo];
-    // console.log({ copy });
+    await addTodo({ variables: { text: todoText } });
   };
 
   /**
