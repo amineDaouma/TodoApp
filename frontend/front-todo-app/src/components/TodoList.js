@@ -41,9 +41,9 @@ const TodoList = () => {
   /**
    * Query
    */
-  const { data } = useQuery(GET_TODOS, {
-    onCompleted: ({ todos }) => {
-      setTodos(todos);
+  const { todosResults, loading, error } = useQuery(GET_TODOS, {
+    onCompleted: results => {
+      setTodos(results.todos);
     }
   });
 
@@ -70,7 +70,7 @@ const TodoList = () => {
   };
 
   /**
-   * Method to handle the comletion of a todo
+   * Method to handle the completion of a todo
    * @param index
    */
   const handleCompleteTodo = index => {
@@ -84,17 +84,17 @@ const TodoList = () => {
    * @param  index
    */
   const handleRemoveTodo = index => {
-    const clonedTodos = [...todos];
-    clonedTodos.splice(index, 1);
-    setTodos(clonedTodos);
+    // const clonedTodos = [...todos];
+    // clonedTodos.splice(index, 1);
+    // setTodos(clonedTodos);
   };
 
   return (
     <div className="todo-container">
       <div className="header">TODO - ITEMS</div>
       <div className="todos">
-        {data.todos &&
-          data.todos.map(todo => (
+        {todos &&
+          todos.map(todo => (
             <Todo
               todo={todo}
               key={todo.id}

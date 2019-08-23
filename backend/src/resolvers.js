@@ -15,6 +15,9 @@ const resolvers = {
       foundTodo.isCompleted = isCompleted;
       await foundTodo.save();
       return foundTodo;
+    },
+    deleteTodo: async (_, { id }) => {
+      const todoToDelete = await Todo.findByIdAndRemove(id);
     }
   }
 };
