@@ -4,42 +4,13 @@ import "./TodoList.css";
 import TodoForm from "./TodoForm";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import {
+  GET_TODOS,
+  ADD_TODO,
+  DELETE_TODO,
+  UPDATE_TODO
+} from "../utils/queries";
 
-const GET_TODOS = gql`
-  query AllTodos {
-    todos {
-      id
-      text
-      isCompleted
-    }
-  }
-`;
-
-const UPDATE_TODO = gql`
-  mutation UpdateTodo($id: ID!, $isCompleted: Boolean!) {
-    updateTodo(id: $id, isCompleted: $isCompleted) {
-      id
-      text
-      isCompleted
-    }
-  }
-`;
-
-const ADD_TODO = gql`
-  mutation AddTodo($text: String!) {
-    addTodo(text: $text) {
-      id
-      text
-      isCompleted
-    }
-  }
-`;
-
-const DELETE_TODO = gql`
-  mutation DeleteTodo($id: ID!) {
-    deleteTodo(id: $id)
-  }
-`;
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
@@ -47,9 +18,7 @@ const TodoList = () => {
    * Query
    */
   const { todosResults, loading, error } = useQuery(GET_TODOS, {
-    onCompleted: results => {
-      setTodos(results.todos);
-    }
+    onCompleted: results => setTodos(results.todos)
   });
 
   /**
@@ -84,28 +53,24 @@ const TodoList = () => {
    * Method to handle the adding of a todo to the todolist
    * @param  todoText
    */
-  const handleAddTodo = async todoText => {
-    await addTodo({ variables: { text: todoText } });
+  const handleAddTodo = todoText => {
+    addTodo({ variables: { text: todoText } });
   };
 
   /**
-   * Method to handle the completion of a todo
+   * Method to handle the completion of a todo to the todolist
    * @param index
    */
   const handleCompleteTodo = index => {
-    const updatedTodo = updateTodo({
-      variables: { id: index, isCompleted: true }
-    });
+    updateTodo({ variables: { id: index, isCompleted: true } });
   };
 
   /**
-   * Method to handle the removing of a todo
+   * Method to handle the removing of a todo to the todolist
    * @param  index
    */
   const handleRemoveTodo = index => {
-    deleteTodo({
-      variables: { id: index }
-    });
+    deleteTodo({ variables: { id: index } });
   };
 
   return (
