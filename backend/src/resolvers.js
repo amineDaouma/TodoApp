@@ -10,9 +10,9 @@ const resolvers = {
       await todo.save();
       return todo;
     },
-    updateTodo: async (_, { todoId, isCompleted }) => {
+    updateTodo: async (_, { id, isCompleted }) => {
       console.log(isCompleted);
-      const foundTodo = await Todo.findById(todoId);
+      const foundTodo = await Todo.findById(id);
       foundTodo.isCompleted = isCompleted;
       return foundTodo;
     }
