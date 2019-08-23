@@ -11,9 +11,9 @@ const resolvers = {
       return todo;
     },
     updateTodo: async (_, { id, isCompleted }) => {
-      console.log(isCompleted);
       const foundTodo = await Todo.findById(id);
       foundTodo.isCompleted = isCompleted;
+      await foundTodo.save();
       return foundTodo;
     }
   }
