@@ -19,9 +19,7 @@ const TodoList = () => {
   const client = useApolloClient();
   const {
     data: { todos }
-  } = useQuery(GET_TODOS, {
-    fetchPolicy: "cache-first"
-  });
+  } = useQuery(GET_TODOS);
 
   //client.writeData({ data: { todos: todos } });
 
