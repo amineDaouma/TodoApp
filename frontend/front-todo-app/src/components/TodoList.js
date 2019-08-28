@@ -3,7 +3,7 @@ import Todo from "./Todo";
 import "./TodoList.css";
 import TodoForm from "./TodoForm";
 import gql from "graphql-tag";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation, useApolloClient } from "@apollo/react-hooks";
 import {
   GET_TODOS,
   ADD_TODO,
@@ -12,14 +12,18 @@ import {
 } from "../utils/queries";
 
 const TodoList = () => {
-  const [todos, setTodos] = useState([]);
-
   /**
    * Query
    */
-  const { todosResults, loading, error } = useQuery(GET_TODOS, {
-    onCompleted: results => setTodos(results.todos)
+
+  const client = useApolloClient();
+  const {
+    data: { todos }
+  } = useQuery(GET_TODOS, {
+    fetchPolicy: "cache-first"
   });
+
+  //client.writeData({ data: { todos: todos } });
 
   /**
    * Add mutation HOOK
