@@ -16,48 +16,48 @@ const TodoList = () => {
    * Query
    */
 
-  const client = useApolloClient();
   const {
     data: { todos }
   } = useQuery(GET_TODOS);
 
-  //client.writeData({ data: { todos: todos } });
-
-  /**
-   * Add mutation HOOK
-   */
-  const [addTodo] = useMutation(ADD_TODO, {
-    refetchQueries: [
-      { query: GET_TODOS, variables: { awaitRefetchQueries: true } }
-    ]
-  });
-
   /**
    * Complete mutation hook
    */
-  const [updateTodo] = useMutation(UPDATE_TODO, {
-    refetchQueries: [
-      { query: GET_TODOS, variables: { awaitRefetchQueries: true } }
-    ]
-  });
+  const [updateTodo] = useMutation(UPDATE_TODO);
 
   /**
    * Delete mutation hook
    *
    */
   const [deleteTodo] = useMutation(DELETE_TODO, {
-    refetchQueries: [
-      { query: GET_TODOS, variables: { awaitRefetchQueries: true } }
-    ]
+    optimisticResponse: {
+      __typename: "Mutation",
+      deleteTodo: {
+        id: -1
+      }
+    },
+    update: async (cache, { data: { deleteTodo } }) => {
+      const existingTodos = cache.readQuery({ query: GET_TODOS });
+      const newTodos = existingTodos.todos.filter(
+        todo => todo.id !== deleteTodo
+      );
+      try {
+        await cache.writeData({
+          data: { todos: newTodos }
+        });
+      } catch (e) {
+        console.log({ e });
+      }
+    }
   });
 
   /**
    * Method to handle the adding of a todo to the todolist
    * @param  todoText
    */
-  const handleAddTodo = todoText => {
-    addTodo({ variables: { text: todoText } });
-  };
+  // const handleAddTodo = todoText => {
+  //   addTodo({ variables: { text: todoText } });
+  // };
 
   /**
    * Method to handle the completion of a todo to the todolist
@@ -90,7 +90,7 @@ const TodoList = () => {
           ))}
       </div>
       <div className="create-todo">
-        <TodoForm addTodo={handleAddTodo} />
+        <TodoForm />
       </div>
     </div>
   );

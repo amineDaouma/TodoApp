@@ -6,7 +6,6 @@ export const GET_TODOS = gql`
       id
       text
       isCompleted
-      # isDuplicated @client
     }
   }
 `;
