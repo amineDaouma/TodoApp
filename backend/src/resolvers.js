@@ -6,6 +6,9 @@ const resolvers = {
 
   Mutation: {
     addTodo: async (_, { text }) => {
+      if (text === "Amine") {
+        throw new Error("I don't like this name");
+      }
       const todo = new Todo({ text: text, isCompleted: false });
       await todo.save();
       return todo;
@@ -17,12 +20,8 @@ const resolvers = {
       return foundTodo;
     },
     deleteTodo: async (_, { id }) => {
-      await Todo.findByIdAndRemove(id, err => {
-        if (err) {
-          return false;
-        }
-      });
-      return true;
+      await Todo.findByIdAndRemove(id);
+      return id;
     }
   }
 };
