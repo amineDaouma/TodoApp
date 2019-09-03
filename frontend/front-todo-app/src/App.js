@@ -1,7 +1,7 @@
 import React from "react";
-import TodoList from "./components/TodoList";
+import Wrapper from "./components/Wrapper";
 
 const App = () => {
-  return <TodoList />;
+  return <Wrapper />;
 };
 export default App;

@@ -11,14 +11,14 @@ import {
   UPDATE_TODO
 } from "../utils/queries";
 
-const TodoList = () => {
-  /**
-   * Query
-   */
+const TodoList = ({ todos }) => {
+  // /**
+  //  * Query
+  //  */
 
-  const {
-    data: { todos }
-  } = useQuery(GET_TODOS);
+  // const {
+  //   data: { todos }
+  // } = useQuery(GET_TODOS);
 
   /**
    * Complete mutation hook
@@ -42,7 +42,8 @@ const TodoList = () => {
         todo => todo.id !== deleteTodo
       );
       try {
-        await cache.writeData({
+        await cache.writeQuery({
+          query: GET_TODOS,
           data: { todos: newTodos }
         });
       } catch (e) {
@@ -50,14 +51,6 @@ const TodoList = () => {
       }
     }
   });
-
-  /**
-   * Method to handle the adding of a todo to the todolist
-   * @param  todoText
-   */
-  // const handleAddTodo = todoText => {
-  //   addTodo({ variables: { text: todoText } });
-  // };
 
   /**
    * Method to handle the completion of a todo to the todolist

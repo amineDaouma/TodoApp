@@ -7,14 +7,26 @@ import { ApolloProvider } from "@apollo/react-hooks";
 
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { HttpLink } from "apollo-link-http";
-import { GET_TODOS } from "./utils/queries";
-import gql from "graphql-tag";
+// import { HttpLink } from "apollo-link-http";
+// import { GET_TODOS } from "./utils/queries";
+// import gql from "graphql-tag";
+
+import { SchemaLink } from "apollo-link-schema";
+import { makeExecutableSchema } from "graphql-tools";
+import resolvers from "./resolvers";
+import typeDefs from "./typeDefs";
 
 const cache = new InMemoryCache();
-const link = new HttpLink({
-  uri: "http://localhost:4000/"
+
+const executableSchema = makeExecutableSchema({
+  typeDefs,
+  resolvers
 });
+const link = new SchemaLink({ schema: executableSchema });
+
+// const link = new HttpLink({
+//   uri: "http://localhost:4000/"
+// });
 
 const client = new ApolloClient({
   cache,
