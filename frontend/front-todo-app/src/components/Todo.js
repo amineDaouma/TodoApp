@@ -7,19 +7,18 @@ const Todo = ({ todo, completeTodo, removeTodo }) => {
       <div
         className="todo"
         style={{
-          textDecoration: todo.isCompleted ? "line-through" : "",
-          textOverflow: "ellipsis"
+          textDecoration: todo.isCompleted ? "line-through" : ""
         }}
       >
         {todo.text}
         <button
-          style={{ background: "green", display: "inline-block" }}
+          style={{ background: "green" }}
           onClick={() => completeTodo(todo.id, todo.isCompleted)}
         >
           Complete
         </button>
         <button
-          style={{ background: "blue", display: "inline-block" }}
+          style={{ background: "blue" }}
           onClick={() => removeTodo(todo.id)}
         >
           Remove

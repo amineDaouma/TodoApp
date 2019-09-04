@@ -17,6 +17,7 @@ const resolvers = {
   Mutation: {
     addTodo: (_, { text }) => {
       const todo = { id: lengthOfTodos++, text: text, isCompleted: false };
+      todos = [...todos, todo];
       return todo;
     },
     deleteTodo: (_, { id }) => {
