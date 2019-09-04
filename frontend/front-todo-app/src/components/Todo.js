@@ -10,7 +10,7 @@ const Todo = ({ todo, completeTodo, removeTodo }) => {
       >
         {todo.text}
         <button
-          style={{ background: "red" }}
+          style={{ background: "green" }}
           onClick={() => completeTodo(todo.id, todo.isCompleted)}
         >
           Complete

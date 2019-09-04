@@ -1,6 +1,8 @@
 // .storybook/config.js
 
 import { configure } from "@storybook/react";
+import "storybook-chromatic";
+
 import "../src/index.css";
 
 const req = require.context("../src", true, /\.stories.js$/);
