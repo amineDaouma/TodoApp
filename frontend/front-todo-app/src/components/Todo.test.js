@@ -20,9 +20,10 @@ describe("Todo", () => {
         style={{ background: "green" }}
         onClick={() => completeTodo(todo.id, todo.isCompleted)}
       >
-        Complete
+        Complete a todo
       </button>
     );
+    //expect(wrapper.find("button")).toEqual(true);
     expect(wrapper.text()).toEqual("Complete");
   });
 

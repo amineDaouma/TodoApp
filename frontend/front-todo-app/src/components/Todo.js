@@ -18,10 +18,10 @@ const Todo = ({ todo, completeTodo, removeTodo }) => {
           Complete
         </button>
         <button
-          style={{ background: "blue" }}
+          style={{ background: "black" }}
           onClick={() => removeTodo(todo.id)}
         >
-          Remove
+          Delete
         </button>
       </div>
     );

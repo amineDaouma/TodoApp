@@ -4,7 +4,8 @@ let todos = [
   { id: 3, text: "Todo-three", isCompleted: false },
   { id: 4, text: "Todo-four", isCompleted: false },
   { id: 5, text: "Todo-five", isCompleted: false },
-  { id: 6, text: "Todo1-six", isCompleted: false }
+  { id: 6, text: "Todo1-six", isCompleted: false },
+  { id: 7, text: "Todo-seven", isCompleted: false }
 ];
 var lengthOfTodos = todos.length + 1;
 

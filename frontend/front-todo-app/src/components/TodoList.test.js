@@ -27,6 +27,7 @@ export const completedTodos = unCompletedTodos.map(unCompletedTodo => ({
 export const mixedTodos = [...unCompletedTodos, ...completedTodos];
 
 describe("TodoList", () => {
+  
   it("should render TodoList", () => {
     shallow(<TodoList />);
   });
@@ -38,7 +39,7 @@ describe("TodoList", () => {
     const wrapper = mount(<TodoList todos={todos} />);
     expect(wrapper.find(Todo)).toHaveLength(todos.length);
   });
-  it("should render exactly 10 divs", () => {
+  it("should render exactly 11 divs", () => {
     const wrapper = mount(<TodoList todos={todos} />);
     const length = todos.length + 4;
     expect(wrapper.find("div")).toHaveLength(length);

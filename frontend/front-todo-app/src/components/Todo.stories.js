@@ -31,5 +31,5 @@ storiesOf("Todo", module)
   .add("completed", () => (
     <Todo todo={{ ...todo, isCompleted: true }} {...actions} />
   ))
-  .add("deleted", () => <Todo todos={{}} />)
-  .add("longTodoText", () => <Todo todo={{ ...todo, text: longTodoText }} />);
+  .add("deleted", () => <Todo todos={{}} />);
+//.add("longTodoText", () => <Todo todo={{ ...todo, text: longTodoText }} />);
